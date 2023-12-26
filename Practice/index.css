@@ -134,5 +134,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
 
+.menu-items{
+  padding-left: 40px;
+}
+
+.user-card{
+  padding : 10px;
+  margin: 10px;
+  border: 1px solid black;
 }
