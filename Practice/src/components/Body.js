@@ -2,16 +2,26 @@ import { useState, useEffect } from 'react';
 import RestaurantCard from './RestaurantCard';
 import Shimmer from './Shimmer';
 import { Link } from 'react-router-dom';
+import useOnlineStatus from '../utils/useOnlineStatus';
+import useListOfRestaurants from '../utils/useListOfRestaurants';
+
+
 
 let defResList = [];
 let clicked = false;
 const Body = () => {
-
+  
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
+
+  // useEffect(() => {
+  //   defResList = useListOfRestaurants();
+  //   console.log(defResList); 
+  //   setListOfRestaurants(defResList);
+  // }, []);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  },[]);
 
   const fetchData = async () => {
     const data = await fetch(
@@ -22,13 +32,21 @@ const Body = () => {
     setListOfRestaurants(defResList);
     console.log(defResList);
   }
+
+  const onlineStatus = useOnlineStatus();
+  if(!onlineStatus){
+    return (
+      <h1>Offline!!</h1>
+    );
+  }
+
   return (!listOfRestaurants.length)? <Shimmer /> :
    (
-    <div className="body">
-      <div className="filter">
-        <div className='searchbar'>
-          <input id='search' defaultValue=""/>
-          <button onClick={() => {
+    <div className="body">  
+      <div className="filter flex justify-center">
+        <div className='searchbar p-4 m-4'>
+          <input className="border border-solid border-black" id='search' defaultValue=""/>
+          <button className="m-4 px-4 py-1 bg-green-100 rounded-xl" onClick={() => {
             const text = document.getElementById('search').value.toLowerCase();
             const filteredList = defResList.filter( (res) => 
             res.info.name.toLowerCase().includes(text)
@@ -42,9 +60,9 @@ const Body = () => {
             setListOfRestaurants(filteredList);
           }}> Search </button>
         </div>
-        {/* <div className='topRated'> */}
+        <div className="m-4 flex items-center">
           <button
-            className="filter-btn"
+            className="filter-btn m-4 px-4 py-1 bg-gray-100 rounded-xl"
             onClick={ () => {
               // * Filter logic
               clicked = !clicked;
@@ -60,9 +78,9 @@ const Body = () => {
           >
             Toggle Top Rated
           </button>
-        {/* </div> */}
+        </div>
       </div>
-      <div className="res-container">
+      <div className="res-container flex flex-wrap">
         {listOfRestaurants.map((restaurant) => (
           <Link to={"/restaurant/"+restaurant.info.id} key={restaurant.info.id}>
             <RestaurantCard resData={restaurant} />
