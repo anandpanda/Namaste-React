@@ -1,4 +1,5 @@
 import React from 'react';
+import { GITHUB_URL } from '../utils/constants';
 
 class UserClass extends React.Component {
 
@@ -6,27 +7,35 @@ class UserClass extends React.Component {
         super(props);
 
         this.state = {
-            count : 0,
-            count2 : 1
+            userInfo: {
+                name: "",
+                location: "",
+                avatar_url: "", 
+            }
         }
+    }
+
+    async componentDidMount(){
+        const data = await fetch(GITHUB_URL + "anandpanda");
+        const json = await data.json();
+
+        this.setState({
+            userInfo : json
+        });
     }
 
     render() {
 
-        const { name, location, contact } = this.props;
+        // const { name, location, contact } = this.props;
         const { count } = this.state;
+        const {name, location, avatar_url} = this.state.userInfo;
 
         return (
             <div className="user-card">
-                <h1>Count : {count}</h1>
-                <button onClick={() => 
-                    this.setState({
-                        count : count + 1
-                    })}
-                >Increment</button>
+                <img src={avatar_url} alt="User Avatar" />
                 <h2>Name : {name}</h2>
                 <h3>Location : {location}</h3>
-                <h4>Contact : {contact}</h4>
+                {/* <h4>Contact : {contact}</h4> */}
             </div>
         )
     }
