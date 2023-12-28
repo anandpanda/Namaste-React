@@ -9,7 +9,7 @@ const ItemList = ({items}) => {
                     className="p-2 m-2 text-left border-gray-200 border-b-2 flex justify-between">
                     
                     <div className="w-5/6">
-                        <div className="my-2 font-bold text-[#3e4152]">{item?.card?.info?.name} <br/> ₹ {item?.card?.info?.price/100}</div> 
+                        <div className="my-2 font-bold text-[#3e4152]">{item?.card?.info?.name} <br/> ₹ {item?.card?.info?.price/100 || item?.card?.info?.defaultPrice/100}</div> 
                         <div className="pr-4 mb-2 text-[#282c3f85]">{item?.card?.info?.description}</div>
                     </div>
                     <div className="w-1/6">

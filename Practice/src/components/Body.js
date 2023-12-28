@@ -79,7 +79,7 @@ const Body = () => {
           </button>
         </div>
       </div>
-      <div className="res-container flex flex-wrap">
+      <div className="res-container flex flex-wrap justify-between px-8">
         {listOfRestaurants.map((restaurant) => (
           <Link to={"/restaurant/"+restaurant.info.id} key={restaurant.info.id}>
             <RestaurantCard resData={restaurant} />
