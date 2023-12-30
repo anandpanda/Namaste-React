@@ -1,4 +1,4 @@
-import React, {lazy, Suspense} from 'react';
+import React, {lazy, Suspense, useState, useEffect} from 'react';
 import ReactDOM from 'react-dom/client';
 
 import Header from './src/components/Header';
@@ -13,17 +13,30 @@ const About = lazy(() => import('./src/components/About'));
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import Shimmer from './src/components/Shimmer';
 
+import UserContext from './src/utils/UserContext';
+
 //  const styleCard = {
 //   backgroundColor: '#f0f0f0',
 // };
 
 const AppLayout = () => {
+
+  const [userName, setUserName] = useState('Default User');
+
+  useEffect(() => {
+    setUserName('Anand Panda');
+  });
+
   return (
-    <div className="app">
-      <Header />
-      <Outlet />
-      <Footer />
-    </div>
+    <UserContext.Provider value={{loggedInUser : userName}}>
+      <div className="app">
+      <UserContext.Provider value={{loggedInUser : 'ABCD EFG'}}>
+        <Header />
+      </UserContext.Provider>
+        <Outlet />
+        <Footer />
+      </div>
+    </UserContext.Provider>
   );
 };
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { GITHUB_URL } from '../utils/constants';
+import UserContext from '../utils/UserContext';
 
 class UserClass extends React.Component {
 
@@ -27,11 +28,21 @@ class UserClass extends React.Component {
     render() {
 
         // const { name, location, contact } = this.props;
-        const { count } = this.state;
+6        // const { count } = this.state;
         const {name, location, avatar_url} = this.state.userInfo;
 
         return (
             <div className="user-card">
+                <UserContext.Consumer>
+                    {
+                        ({loggedInUser}) => {
+                            return (
+                                <h1 className='font-bold'> {loggedInUser} </h1>
+                            )
+                        }
+                    }
+                </UserContext.Consumer>
+                
                 <img src={avatar_url} alt="User Avatar" />
                 <h2>Name : {name}</h2>
                 <h3>Location : {location}</h3>
