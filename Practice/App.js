@@ -15,6 +15,9 @@ import Shimmer from './src/components/Shimmer';
 
 import UserContext from './src/utils/UserContext';
 
+import { Provider } from 'react-redux';
+import appStore from './src/utils/appStore';
+
 //  const styleCard = {
 //   backgroundColor: '#f0f0f0',
 // };
@@ -28,15 +31,19 @@ const AppLayout = () => {
   });
 
   return (
-    <UserContext.Provider value={{loggedInUser : userName}}>
-      <div className="app">
-      <UserContext.Provider value={{loggedInUser : 'ABCD EFG'}}>
-        <Header />
+    <Provider store={appStore}>
+
+      <UserContext.Provider value={{loggedInUser : userName}}>
+        <div className="app">
+        <UserContext.Provider value={{loggedInUser : 'Elon Musk'}}>
+          <Header />
+        </UserContext.Provider>
+          <Outlet />
+          <Footer />
+        </div>
       </UserContext.Provider>
-        <Outlet />
-        <Footer />
-      </div>
-    </UserContext.Provider>
+
+    </Provider>
   );
 };
 
